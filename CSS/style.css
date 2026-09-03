@@ -1,0 +1,50 @@
+nav a {
+    padding: 6px 10px;
+    text-decoration: none;
+}
+
+nav a.ativo {
+    font-weight: bold;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+}
+
+.campo-formulario {
+    margin-bottom: 16px;
+}
+
+.campo-formulario label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.campo-formulario input {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.campo-formulario input.erro {
+    border: 2px solid #c62828;
+    background-color: #fff5f5;
+}
+
+.mensagem-erro {
+    display: block;
+    margin-top: 5px;
+    color: #c62828;
+    font-size: 14px;
+}
+
+.sucesso {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+button[type="submit"] {
+    padding: 8px 16px;
+    cursor: pointer;
+}
