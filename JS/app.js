@@ -5,10 +5,14 @@ function atualizarMenuAtivo() {
     const rotaAtual = window.location.hash || '#/inicio';
 
     linksMenu.forEach(link => {
-        if (link.getAttribute('href') === rotaAtual) {
+        const linkAtivo = link.getAttribute('href') === rotaAtual;
+
+        if (linkAtivo) {
             link.classList.add('ativo');
+            link.setAttribute('aria-current', 'page');
         } else {
             link.classList.remove('ativo');
+            link.removeAttribute('aria-current');
         }
     });
 }
@@ -80,6 +84,17 @@ function configurarFormularioCadastro() {
     });
 }
 
+function atualizarFocoDaRota() {
+    const tituloPrincipal = app.querySelector('h2');
+
+    if (!tituloPrincipal) {
+        return;
+    }
+
+    tituloPrincipal.setAttribute('tabindex', '-1');
+    tituloPrincipal.focus();
+}
+
 function carregarRota() {
     const rota = window.location.hash || '#/inicio';
     const template = window.templates[rota] || window.templates['#/404'];
@@ -89,6 +104,7 @@ function carregarRota() {
     atualizarMenuAtivo();
     configurarFormularioCadastro();
     renderizarRegistros();
+    atualizarFocoDaRota();
 }
 
 linksMenu.forEach(link => {

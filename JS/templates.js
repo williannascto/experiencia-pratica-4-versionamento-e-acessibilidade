@@ -27,8 +27,8 @@ function gerarRecursos() {
 window.templates = {
 
     '#/inicio': () => `
-        <section>
-            <h2>Início</h2>
+        <section aria-labelledby="titulo-inicio">
+            <h2 id="titulo-inicio">Início</h2>
             <p>Bem-vindo à Experiência Prática 3.</p>
 
             <h3>Recursos da aplicação</h3>
@@ -40,11 +40,17 @@ window.templates = {
     `,
 
     '#/cadastro': () => `
-        <section>
-            <h2>Cadastro</h2>
-            <p>Preencha os dados abaixo para realizar o cadastro.</p>
+        <section aria-labelledby="titulo-cadastro">
+            <h2 id="titulo-cadastro">Cadastro</h2>
+            <p id="instrucao-cadastro">
+                Preencha os dados abaixo para realizar o cadastro.
+            </p>
 
-            <form id="form-cadastro" novalidate>
+            <form
+                id="form-cadastro"
+                novalidate
+                aria-describedby="instrucao-cadastro"
+            >
 
                 <div class="campo-formulario">
                     <label for="nome">Nome:</label>
@@ -53,6 +59,9 @@ window.templates = {
                         id="nome"
                         name="nome"
                         placeholder="Digite seu nome"
+                        autocomplete="name"
+                        required
+                        aria-required="true"
                     >
                 </div>
 
@@ -63,6 +72,9 @@ window.templates = {
                         id="email"
                         name="email"
                         placeholder="Digite seu e-mail"
+                        autocomplete="email"
+                        required
+                        aria-required="true"
                     >
                 </div>
 
@@ -73,28 +85,40 @@ window.templates = {
                         id="telefone"
                         name="telefone"
                         placeholder="Digite seu telefone"
+                        autocomplete="tel"
+                        required
+                        aria-required="true"
                     >
                 </div>
 
-                <button type="submit">Cadastrar</button>
+                <button type="submit">
+                    Cadastrar
+                </button>
 
-                <p id="mensagem-sucesso"></p>
+                <p
+                    id="mensagem-sucesso"
+                    aria-live="polite"
+                    aria-atomic="true"
+                ></p>
             </form>
         </section>
     `,
 
     '#/registros': () => `
-        <section>
-            <h2>Registros</h2>
+        <section aria-labelledby="titulo-registros">
+            <h2 id="titulo-registros">Registros</h2>
             <p>Cadastros armazenados no navegador:</p>
 
-            <div id="lista-registros"></div>
+            <div
+                id="lista-registros"
+                aria-live="polite"
+            ></div>
         </section>
     `,
 
     '#/404': () => `
-        <section>
-            <h2>Página não encontrada</h2>
+        <section aria-labelledby="titulo-404">
+            <h2 id="titulo-404">Página não encontrada</h2>
             <p>A rota informada não existe.</p>
         </section>
     `

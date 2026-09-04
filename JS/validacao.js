@@ -14,22 +14,34 @@ function validarTelefone(telefone) {
 
 function mostrarErro(campo, mensagem) {
     campo.classList.add('erro');
+    campo.setAttribute('aria-invalid', 'true');
 
-    let mensagemErro = campo.parentElement.querySelector('.mensagem-erro');
+    const idMensagemErro = `${campo.id}-erro`;
+
+    let mensagemErro = campo.parentElement.querySelector(`#${idMensagemErro}`);
 
     if (!mensagemErro) {
         mensagemErro = document.createElement('small');
+
+        mensagemErro.id = idMensagemErro;
         mensagemErro.classList.add('mensagem-erro');
+        mensagemErro.setAttribute('role', 'alert');
+
         campo.parentElement.appendChild(mensagemErro);
     }
 
     mensagemErro.textContent = mensagem;
+
+    campo.setAttribute('aria-describedby', idMensagemErro);
 }
 
 function limparErro(campo) {
     campo.classList.remove('erro');
+    campo.setAttribute('aria-invalid', 'false');
+    campo.removeAttribute('aria-describedby');
 
-    const mensagemErro = campo.parentElement.querySelector('.mensagem-erro');
+    const idMensagemErro = `${campo.id}-erro`;
+    const mensagemErro = campo.parentElement.querySelector(`#${idMensagemErro}`);
 
     if (mensagemErro) {
         mensagemErro.remove();
@@ -52,6 +64,7 @@ function validarFormulario(formulario) {
             campoNome,
             'Informe um nome com pelo menos 3 caracteres.'
         );
+
         formularioValido = false;
     }
 
@@ -60,6 +73,7 @@ function validarFormulario(formulario) {
             campoEmail,
             'Informe um e-mail válido.'
         );
+
         formularioValido = false;
     }
 
@@ -68,7 +82,17 @@ function validarFormulario(formulario) {
             campoTelefone,
             'Informe um telefone com 10 ou 11 dígitos.'
         );
+
         formularioValido = false;
+    }
+
+    if (!formularioValido) {
+        const primeiroCampoInvalido =
+            formulario.querySelector('[aria-invalid="true"]');
+
+        if (primeiroCampoInvalido) {
+            primeiroCampoInvalido.focus();
+        }
     }
 
     return formularioValido;
