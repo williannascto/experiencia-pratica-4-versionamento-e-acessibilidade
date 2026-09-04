@@ -1,14 +1,19 @@
 const app = document.querySelector('#app');
 const linksMenu = document.querySelectorAll('nav a');
+const botaoContraste = document.querySelector('#alternar-contraste');
 
 function atualizarMenuAtivo() {
     const rotaAtual = window.location.hash || '#/inicio';
 
     linksMenu.forEach(link => {
-        if (link.getAttribute('href') === rotaAtual) {
+        const linkAtivo = link.getAttribute('href') === rotaAtual;
+
+        if (linkAtivo) {
             link.classList.add('ativo');
+            link.setAttribute('aria-current', 'page');
         } else {
             link.classList.remove('ativo');
+            link.removeAttribute('aria-current');
         }
     });
 }
@@ -80,6 +85,56 @@ function configurarFormularioCadastro() {
     });
 }
 
+function atualizarFocoDaRota() {
+    const tituloPrincipal = app.querySelector('h2');
+
+    if (!tituloPrincipal) {
+        return;
+    }
+
+    tituloPrincipal.setAttribute('tabindex', '-1');
+    tituloPrincipal.focus();
+}
+
+function atualizarBotaoContraste() {
+    const contrasteAtivo = document.body.classList.contains('alto-contraste');
+
+    botaoContraste.setAttribute(
+        'aria-pressed',
+        contrasteAtivo ? 'true' : 'false'
+    );
+
+    botaoContraste.textContent = contrasteAtivo
+        ? 'Desativar alto contraste'
+        : 'Ativar alto contraste';
+}
+
+function carregarPreferenciaContraste() {
+    const contrasteSalvo = localStorage.getItem('altoContraste');
+
+    if (contrasteSalvo === 'true') {
+        document.body.classList.add('alto-contraste');
+    }
+
+    atualizarBotaoContraste();
+}
+
+function configurarModoContraste() {
+    botaoContraste.addEventListener('click', () => {
+        document.body.classList.toggle('alto-contraste');
+
+        const contrasteAtivo =
+            document.body.classList.contains('alto-contraste');
+
+        localStorage.setItem(
+            'altoContraste',
+            contrasteAtivo.toString()
+        );
+
+        atualizarBotaoContraste();
+    });
+}
+
 function carregarRota() {
     const rota = window.location.hash || '#/inicio';
     const template = window.templates[rota] || window.templates['#/404'];
@@ -89,6 +144,7 @@ function carregarRota() {
     atualizarMenuAtivo();
     configurarFormularioCadastro();
     renderizarRegistros();
+    atualizarFocoDaRota();
 }
 
 linksMenu.forEach(link => {
@@ -98,4 +154,9 @@ linksMenu.forEach(link => {
 });
 
 window.addEventListener('hashchange', carregarRota);
-window.addEventListener('DOMContentLoaded', carregarRota);
+
+window.addEventListener('DOMContentLoaded', () => {
+    carregarPreferenciaContraste();
+    configurarModoContraste();
+    carregarRota();
+});

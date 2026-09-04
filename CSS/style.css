@@ -9,6 +9,12 @@ nav a.ativo {
     border-radius: 4px;
 }
 
+#alternar-contraste {
+    margin-top: 12px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
 .campo-formulario {
     margin-bottom: 16px;
 }
@@ -47,4 +53,69 @@ nav a.ativo {
 button[type="submit"] {
     padding: 8px 16px;
     cursor: pointer;
+}
+
+/* Acessibilidade: foco visível para navegação por teclado */
+nav a:focus-visible,
+.campo-formulario input:focus-visible,
+button[type="submit"]:focus-visible,
+#alternar-contraste:focus-visible {
+    outline: 3px solid #000000;
+    outline-offset: 3px;
+}
+
+/* Modo de alto contraste */
+body.alto-contraste {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+body.alto-contraste header,
+body.alto-contraste main,
+body.alto-contraste section,
+body.alto-contraste article {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+body.alto-contraste a {
+    color: #00ffff;
+}
+
+body.alto-contraste nav a.ativo {
+    background-color: #ffff00;
+    color: #000000;
+}
+
+body.alto-contraste .campo-formulario input {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #ffffff;
+}
+
+body.alto-contraste .campo-formulario input.erro {
+    background-color: #000000;
+    color: #ffffff;
+    border: 3px solid #ffff00;
+}
+
+body.alto-contraste .mensagem-erro {
+    color: #ffff00;
+}
+
+body.alto-contraste .sucesso {
+    color: #00ffff;
+}
+
+body.alto-contraste button {
+    background-color: #ffff00;
+    color: #000000;
+    border: 2px solid #ffffff;
+}
+
+body.alto-contraste nav a:focus-visible,
+body.alto-contraste .campo-formulario input:focus-visible,
+body.alto-contraste button:focus-visible {
+    outline: 3px solid #00ffff;
+    outline-offset: 3px;
 }
