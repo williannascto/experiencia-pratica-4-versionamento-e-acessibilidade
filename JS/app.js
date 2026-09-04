@@ -1,5 +1,6 @@
 const app = document.querySelector('#app');
 const linksMenu = document.querySelectorAll('nav a');
+const botaoContraste = document.querySelector('#alternar-contraste');
 
 function atualizarMenuAtivo() {
     const rotaAtual = window.location.hash || '#/inicio';
@@ -95,6 +96,45 @@ function atualizarFocoDaRota() {
     tituloPrincipal.focus();
 }
 
+function atualizarBotaoContraste() {
+    const contrasteAtivo = document.body.classList.contains('alto-contraste');
+
+    botaoContraste.setAttribute(
+        'aria-pressed',
+        contrasteAtivo ? 'true' : 'false'
+    );
+
+    botaoContraste.textContent = contrasteAtivo
+        ? 'Desativar alto contraste'
+        : 'Ativar alto contraste';
+}
+
+function carregarPreferenciaContraste() {
+    const contrasteSalvo = localStorage.getItem('altoContraste');
+
+    if (contrasteSalvo === 'true') {
+        document.body.classList.add('alto-contraste');
+    }
+
+    atualizarBotaoContraste();
+}
+
+function configurarModoContraste() {
+    botaoContraste.addEventListener('click', () => {
+        document.body.classList.toggle('alto-contraste');
+
+        const contrasteAtivo =
+            document.body.classList.contains('alto-contraste');
+
+        localStorage.setItem(
+            'altoContraste',
+            contrasteAtivo.toString()
+        );
+
+        atualizarBotaoContraste();
+    });
+}
+
 function carregarRota() {
     const rota = window.location.hash || '#/inicio';
     const template = window.templates[rota] || window.templates['#/404'];
@@ -114,4 +154,9 @@ linksMenu.forEach(link => {
 });
 
 window.addEventListener('hashchange', carregarRota);
-window.addEventListener('DOMContentLoaded', carregarRota);
+
+window.addEventListener('DOMContentLoaded', () => {
+    carregarPreferenciaContraste();
+    configurarModoContraste();
+    carregarRota();
+});
