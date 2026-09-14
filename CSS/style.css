@@ -119,3 +119,12 @@ body.alto-contraste button:focus-visible {
     outline: 3px solid #00ffff;
     outline-offset: 3px;
 }
+
+/* Imagem moderna otimizada em WebP */
+.imagem-acessibilidade {
+    width: 120px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+}
